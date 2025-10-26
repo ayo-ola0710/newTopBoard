@@ -34,7 +34,7 @@ const page = () => {
       <div className="flex-1">
         <Navbar isTutor={true} />
         <main>
-          <div className="w-full mt-8">
+          <div className="w-full mt-8 pr-10">
             {/* Tabs */}
             <div className="flex justify-between border-b border-gray-300">
               <span className="flex space-x-2">

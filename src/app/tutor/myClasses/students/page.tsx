@@ -37,7 +37,7 @@ const TutorMyClasses: React.FC = () => {
 
           <div className="w-full mt-8">
             {/* Tabs */}
-            <div className="flex justify-between border-b border-gray-300">
+            <div className="flex justify-between border-b border-gray-300 mr-6">
               <span className="flex space-x-2">
                 <button
                   onClick={() => setActiveTab("tab1")}
