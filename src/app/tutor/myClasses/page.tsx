@@ -73,7 +73,7 @@ const page = () => {
 
             {/* Tab Content */}
             <div className="">
-              {activeTab === "tab1" && <div>some text here</div>}
+              {activeTab === "tab1" && <div></div>}
               {activeTab === "tab2" && (
                 <section>this is content for tab 2</section>
               )}
