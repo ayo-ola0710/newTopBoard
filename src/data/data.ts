@@ -65,6 +65,7 @@ export const submissionData = [
     date: "now",
     time: "also now",
     grade: "89%",
+    hasGraded: true,
   },
   {
     id: 2,
@@ -72,6 +73,7 @@ export const submissionData = [
     date: "now",
     time: "also now",
     grade: "89%",
+    hasGraded: true,
   },
   {
     id: 3,
@@ -79,5 +81,6 @@ export const submissionData = [
     date: "now",
     time: "also now",
     grade: "89%",
+    hasGraded: false,
   },
 ];
