@@ -2,38 +2,6 @@ import React from "react";
 import { FaTrophy } from "react-icons/fa";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 
-type StatBoxProps = {
-  label: string;
-  value: string | number;
-  highlight?: boolean;
-  icon?: React.ReactNode;
-};
-
-export const StatBox: React.FC<StatBoxProps> = ({
-  label,
-  value,
-  highlight,
-  icon,
-}) => {
-  return (
-    <div className="bg-[#F4F4F4] rounded-[16px] px-[20px] py-[16px] flex-1 min-w-[160px]">
-      <div className="flex items-center justify-between mb-3">
-        <span className="text-[#8E91A1] text-[12px] font-medium">{label}</span>
-        {icon}
-      </div>
-      <div
-        className={
-          highlight
-            ? "text-[#059669] font-extrabold text-[24px] leading-[100%]"
-            : "text-[#303240] font-bold text-[24px] leading-[100%]"
-        }
-      >
-        {value}
-      </div>
-    </div>
-  );
-};
-
 type Student = {
   id: string;
   name: string;
@@ -62,28 +30,30 @@ const rankIconByPosition = (position: number) => {
 
 const StudentListItem: React.FC<StudentListItemProps> = ({ student, rank }) => {
   return (
-    <li className="flex items-center justify-between px-4 py-3 hover:bg-[#F9FAFB]">
-      <div className="flex items-center gap-3">
+    <tr className="hover:bg-[#F9FAFB]">
+      <td className="px-4 py-3 text-center">
         {rankIconByPosition(rank) || (
-          <div className="w-[28px] h-[28px] rounded-full border border-[#E5E7EB]" />
+          <div className="w-[28px] h-[28px] rounded-full border border-[#E5E7EB] mx-auto flex items-center justify-center text-[#8E91A1] text-[12px] font-medium">
+            {rank}
+          </div>
         )}
-        <div className="w-[28px] h-[28px] rounded-full bg-[#E5E7EB]" />
-        <div className="flex flex-col">
+      </td>
+      <td className="px-4 py-3">
+        <div className="flex items-center gap-3">
+          <div className="w-[28px] h-[28px] rounded-full bg-[#E5E7EB]" />
           <span className="text-[#303240] text-[14px] font-medium leading-[100%]">
             {student.name}
           </span>
-          <span className="text-[#8E91A1] text-[12px] leading-[100%] mt-[6px]">
-            {student.code}
-          </span>
         </div>
-      </div>
-      <div className="flex items-center gap-2">
-        <span className="text-[#059669] font-semibold text-[12px]">
-          {student.scorePercent.toFixed(1)}%
-        </span>
-        <HiOutlineDotsVertical className="text-[#8E91A1]" />
-      </div>
-    </li>
+      </td>
+      <td className="px-4 py-3 text-[#8E91A1] text-[12px]">{student.code}</td>
+      <td className="px-4 py-3 text-[#059669] font-semibold text-[12px]">
+        {student.scorePercent.toFixed(1)}%
+      </td>
+      <td className="px-4 py-3 text-center">
+        <HiOutlineDotsVertical className="text-[#8E91A1] mx-auto" />
+      </td>
+    </tr>
   );
 };
 
@@ -167,11 +137,36 @@ export const StudentList: React.FC<StudentListProps> = ({
           </button>
         </form>
       )}
-      <ul>
-        {sorted.map((student, idx) => (
-          <StudentListItem key={student.id} student={student} rank={idx + 1} />
-        ))}
-      </ul>
+      <table className="w-full">
+        <thead>
+          <tr className="border-b border-[#F3F4F6]">
+            <th className="px-4 py-3 text-left text-[#8E91A1] text-[12px] font-medium">
+              Rank
+            </th>
+            <th className="px-4 py-3 text-left text-[#8E91A1] text-[12px] font-medium">
+              Name
+            </th>
+            <th className="px-4 py-3 text-left text-[#8E91A1] text-[12px] font-medium">
+              Code
+            </th>
+            <th className="px-4 py-3 text-left text-[#8E91A1] text-[12px] font-medium">
+              Score
+            </th>
+            <th className="px-4 py-3 text-center text-[#8E91A1] text-[12px] font-medium">
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {sorted.map((student, idx) => (
+            <StudentListItem
+              key={student.id}
+              student={student}
+              rank={idx + 1}
+            />
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
@@ -199,21 +194,6 @@ const initialStudents: Student[] = [
 
 const Leaderboard: React.FC = () => {
   const [students, setStudents] = React.useState<Student[]>(initialStudents);
-
-  const total = students.length;
-  const average = students.length
-    ? (
-        students.reduce((s, c) => s + c.scorePercent, 0) / students.length
-      ).toFixed(1)
-    : "0.0";
-
-  const stats = [
-    { label: "Total Students", value: total },
-    { label: "Completed Assessments", value: 5 },
-    { label: "Class Average", value: `${average}%`, highlight: true },
-    { label: "Class Rank", value: <FaTrophy className="text-[#F59E0B]" /> },
-  ] as const;
-
   const handleAdd = (payload: Omit<Student, "id">) => {
     const newStudent: Student = {
       id: `${Date.now()}`,
@@ -222,25 +202,7 @@ const Leaderboard: React.FC = () => {
     setStudents((prev) => [...prev, newStudent]);
   };
 
-  return (
-    <div className="px-3 py-2">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
-        {stats.map((s, idx) => (
-          <StatBox
-            key={idx}
-            label={s.label}
-            value={s.value as unknown as string}
-            highlight={(s as any).highlight}
-            icon={
-              idx === 3 ? <FaTrophy className="text-[#F59E0B]" /> : undefined
-            }
-          />
-        ))}
-      </div>
-
-      <StudentList students={students} onAdd={handleAdd} />
-    </div>
-  );
+  return <StudentList students={students} onAdd={handleAdd} />;
 };
 
 export default Leaderboard;

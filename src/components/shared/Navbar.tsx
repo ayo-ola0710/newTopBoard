@@ -8,7 +8,7 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ isTutor }) => {
   const dashboardType = isTutor ? "Tutor" : "Student's";
   return (
-    <nav className="sticky top-0 left-0 bg-white shadow-sm px-4 py-4 mr-6 flex items-center justify-between">
+    <nav className="sticky top-0 left-0 bg-white shadow-sm px-4 py-4  flex items-center justify-between">
       <h1 className="text-xl uppercase font-bold text-[#B6B9C9]">
         {dashboardType} Dashboard
       </h1>
