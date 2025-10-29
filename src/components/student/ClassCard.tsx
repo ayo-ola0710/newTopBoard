@@ -21,18 +21,18 @@ const ClassCard: React.FC<ClassCardProps> = ({
   return (
     <div
       className={classNames(
-        "p-[32px] gap-[24px] rounded-[24px] bg-[#F4F4F4] flex justify-between items-center",
+        "p-[25px] gap-[24px] rounded-[24px] bg-[#F4F4F4] flex justify-between items-center",
         borderColor,
         "border-l-8"
       )}
     >
       <div className="flex flex-col gap-1.5">
-        <h2 className="font-semibold text-[20px] text-[#303240] ">{title}</h2>
+        <h2 className="font-semibold text-[24px] text-[#303240] ">{title}</h2>
         <p className="text-sm text-gray-500">{students} students</p>
         <p className="text-sm text-gray-500">{assessments} assessments</p>
         <button
           className={classNames(
-            "text-white text-sm px-[24px] py-[12px] rounded-[24px]",
+            "text-white text-sm px-[25px] py-[12px] rounded-[24px]",
             buttonColor || "bg-black"
           )}
         >
